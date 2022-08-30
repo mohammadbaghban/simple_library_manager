@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface BookRepository extends MongoRepository<Book, String> {
-    public List<Book> findByName(String name);
+    List<Book> findByName(String name);
 }

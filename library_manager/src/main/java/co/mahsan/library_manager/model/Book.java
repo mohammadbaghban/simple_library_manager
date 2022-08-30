@@ -2,15 +2,17 @@ package co.mahsan.library_manager.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document
+@Document(collection = "book")
 @Getter
 @Setter
+@Accessors(chain = true)
 public class Book {
     @Id
     private String id;
@@ -19,8 +21,6 @@ public class Book {
     private Publisher publisher;
     @DBRef
     private List<Writer> writers;
-
-    private Book(){}
 
     public Book(String name, Publisher publisher, List<Writer> writers) {
         this.name = name;

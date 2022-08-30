@@ -1,7 +1,10 @@
 package co.mahsan.library_manager.repository;
 
-import co.mahsan.library_manager.model.Book;
+import co.mahsan.library_manager.model.Writer;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface WriterRepository extends MongoRepository<Book, String> {
+import java.util.List;
+
+public interface WriterRepository extends MongoRepository<Writer, String> {
+    List<Writer> findByName(String name);
 }
