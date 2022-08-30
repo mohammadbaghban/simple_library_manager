@@ -18,20 +18,20 @@ public class Book {
     private String id;
     private String name;
     @DBRef
-    private Publisher publisher;
+    private String publisherId;
     @DBRef
-    private List<Writer> writers;
+    private List<String> writersId;
 
-    public Book(String name, Publisher publisher, List<Writer> writers) {
+    public Book(String name, String publisherId, List<String> writersId) {
         this.name = name;
-        this.publisher = publisher;
-        this.writers = writers;
+        this.publisherId = publisherId;
+        this.writersId = writersId;
     }
 
     @Override
     public String toString() {
         return String.format(
                 "Book[id:%s, Name:'%s', Writers:'%s', Publisher:'%s']",
-                id, name, writers, publisher);
+                id, name, writersId, publisherId);
     }
 }

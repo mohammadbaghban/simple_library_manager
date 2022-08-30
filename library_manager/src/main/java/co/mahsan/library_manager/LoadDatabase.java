@@ -31,19 +31,6 @@ class LoadDatabase implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Book newBook1 = new Book("Introduction to Parallel Computing: From Algorithms to Programming on State-of-the-Art Platforms",
-                publisherRepo.save(new Publisher().setName("p05")),
-                Arrays.asList(
-                        writerRepo.save(new Writer().setName("Borut Robič")),
-                        writerRepo.save(new Writer().setName("Patricio Bulić")),
-                        writerRepo.save(new Writer().setName("Roman Trobec"))));
 
-        log.info("Preloading " + bookRepo.save(newBook1));
-        log.info("Preloading " + bookRepo.save(new Book("Introduction to Algorithms",
-                publisherRepo.save(new Publisher().setName("Springer")),
-                Arrays.asList(writerRepo.save(new Writer().setName("Thomas Cormen")),
-                        writerRepo.save(new Writer().setName("Charles Leiserson")),
-                        writerRepo.save(new Writer().setName("Ronald Rivest")),
-                        writerRepo.save(new Writer().setName("Clifford Stein"))))));
     }
 }
