@@ -2,7 +2,7 @@ package co.mahsan.library_manager.controller;
 
 import java.util.List;
 
-import co.mahsan.library_manager.model.Book;
+import co.mahsan.library_manager.model.BookDTO;
 import co.mahsan.library_manager.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,26 +22,26 @@ class BookController {
     // Aggregate root
     // tag::get-aggregate-root[]
     @GetMapping("/books")
-    List<Book> all() {
+    List<BookDTO> all() {
         return service.findAll();
     }
     // end::get-aggregate-root[]
 
     @PostMapping("/books")
-    Book newBook(@RequestBody Book newBook) {
+    BookDTO newBook(@RequestBody BookDTO newBook) {
         return service.save(newBook);
     }
 
     // Single item
 
     @GetMapping("/books/{id}")
-    Book one(@PathVariable String id) {
+    BookDTO one(@PathVariable String id) {
 
         return service.findById(id);
     }
 
     @PutMapping("/books/{id}")
-    Book replaceBook(@RequestBody Book newBook, @PathVariable String id) {
+    BookDTO replaceBook(@RequestBody BookDTO newBook, @PathVariable String id) {
         return service.replaceBook(newBook, id);
     }
 
