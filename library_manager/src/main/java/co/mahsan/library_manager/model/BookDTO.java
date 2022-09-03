@@ -17,6 +17,10 @@ public class BookDTO {
     private String publisherId;
     private List<String> writersId;
 
+    public BookDTO(){
+
+    }
+
     public BookDTO(String name, String publisherId, List<String> writersId) {
         this.name = name;
         this.publisherId = publisherId;
