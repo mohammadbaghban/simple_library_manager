@@ -6,7 +6,9 @@ import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "publisher")
+import static co.mahsan.library_manager.util.Constant.PUBLISHER_REPO_NAME;
+
+@Document(collection = PUBLISHER_REPO_NAME)
 @Getter
 @Setter
 @Accessors(chain = true)

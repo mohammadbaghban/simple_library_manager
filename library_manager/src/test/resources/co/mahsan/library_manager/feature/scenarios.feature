@@ -4,7 +4,7 @@ Feature: Books CRUD
     When the client calls books
     Then check the status code to be OK
 
-  Scenario: client makes call to GET /books/id
+  Scenario: client makes call to POST and GET book
     Given execute posting a new book
     When the client calls book by id
     Then check the status code to be OK
@@ -24,6 +24,5 @@ Feature: Books CRUD
     When the client requests to delete last book
     Then check the status code to be OK
 
-  # todo comment: test-e add and get new book
 
 

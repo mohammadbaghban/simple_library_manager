@@ -1,10 +1,9 @@
 package co.mahsan.library_manager.cucumber.step;
 
-import co.mahsan.library_manager.Exceptions.BookNotFoundException;
-import co.mahsan.library_manager.controller.BookController;
-import co.mahsan.library_manager.mappers.BookMapper;
+import co.mahsan.library_manager.exception.BookNotFoundException;
+import co.mahsan.library_manager.mapper.BookMapper;
 import co.mahsan.library_manager.model.Book;
-import co.mahsan.library_manager.model.BookDTO;
+import co.mahsan.library_manager.model.BookDto;
 import co.mahsan.library_manager.repository.BookRepository;
 import co.mahsan.library_manager.repository.PublisherRepository;
 import co.mahsan.library_manager.repository.WriterRepository;
@@ -34,12 +33,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class Steps {
 
-    private final BookController bookController;
     private final BookRepository bookRepository;
     private final PublisherRepository publisherRepository;
     private final WriterRepository writerRepository;
     private final RestTemplate restTemplate = new RestTemplate();
-    //private final RestTemplate restTemplate;
     private String lastBookName = "";
     private String lastBookId = "";
     private HttpStatus lastStatusCode;
@@ -75,14 +72,14 @@ public class Steps {
 
     @Given("execute posting a new book")
     public void postNewBook() throws IOException {
-        BookDTO newBookDTO = new BookDTO();
-        newBookDTO.setName(lastBookName);
+        BookDto newBookDto = new BookDto();
+        newBookDto.setName(lastBookName);
         ObjectMapper mapper = new ObjectMapper();
 
-        String jsonInString = mapper.writeValueAsString(newBookDTO);
+        String jsonInString = mapper.writeValueAsString(newBookDto);
         System.out.println("new bookdto " + jsonInString);
         ResponseEntity<String> response = executePost(baseUrl + "/books/", jsonInString);
-        lastBookId = mapper.readValue(response.getBody(), BookDTO.class).getId();
+        lastBookId = mapper.readValue(response.getBody(), BookDto.class).getId();
 
     }
 
@@ -98,7 +95,7 @@ public class Steps {
 
         ResponseEntity<String> response = executeGet(baseUrl + "/books/" + lastBookId);
         ObjectMapper objectMapper = new ObjectMapper();
-        BookDTO bookDTO = objectMapper.readValue(response.getBody(), BookDTO.class);
+        BookDto bookDTO = objectMapper.readValue(response.getBody(), BookDto.class);
         System.out.println("book received " + bookDTO.getName());
         assertEquals(bookDTO.getName(), lastBookName);
     }
@@ -108,7 +105,7 @@ public class Steps {
     public void theClientCallsBooks() throws JsonProcessingException {
         ResponseEntity<String> response = executeGet(baseUrl + "/books/");
         ObjectMapper objectMapper = new ObjectMapper();
-        List<BookDTO> booksDTO = objectMapper.readValue(response.getBody(), new TypeReference<List<BookDTO>>(){});
+        List<BookDto> booksDTO = objectMapper.readValue(response.getBody(), new TypeReference<List<BookDto>>(){});
         System.out.println("books received " + booksDTO.get(0));
         //assertEquals(bookDTO.getName(), "new book");
 
@@ -116,13 +113,13 @@ public class Steps {
 
     @Then("check if new book is in database")
     public void checkIfNewBookIsInDB() {
-        assertFalse(bookRepository.findByName(lastBookName).isEmpty());
+        assertFalse(bookRepository.findAllByName(lastBookName).isEmpty());
     }
 
     @When("the client requests to update last book name")
     public void theClientRequestsToUpdateLastBook() throws BookNotFoundException, IOException {
         Optional<Book> optionalBook = bookRepository.findById(lastBookId);
-        BookDTO bookDTO;
+        BookDto bookDTO;
         if (!optionalBook.isPresent()) {
             throw new BookNotFoundException("Book with this id not found");
         } else {
@@ -132,13 +129,13 @@ public class Steps {
         bookDTO.setName(lastBookName);
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString = mapper.writeValueAsString(bookDTO);
-        HttpEntity<BookDTO> response = executePut(baseUrl + "/books/" + lastBookId, jsonInString);
+        HttpEntity<BookDto> response = executePut(baseUrl + "/books/" + lastBookId, jsonInString);
         assertEquals(response.getBody().getName(), lastBookName);
     }
 
     @When("the client requests to delete last book")
     public void deleteLastBook() {
-        ResponseEntity<BookDTO> response = executeDelete(baseUrl + "/books/", lastBookId);
+        ResponseEntity<BookDto> response = executeDelete(baseUrl + "/books/", lastBookId);
         assertFalse(bookRepository.findById(lastBookId).isPresent());
     }
 
@@ -159,19 +156,19 @@ public class Steps {
         return response;
     }
 
-    public ResponseEntity<BookDTO> executePut(String url, String requestJson) throws IOException {
+    public ResponseEntity<BookDto> executePut(String url, String requestJson) throws IOException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<String> entity = new HttpEntity<String>(requestJson, headers);
-        ResponseEntity<BookDTO> response = restTemplate.exchange(url, HttpMethod.PUT, entity, BookDTO.class);
+        ResponseEntity<BookDto> response = restTemplate.exchange(url, HttpMethod.PUT, entity, BookDto.class);
         lastStatusCode = response.getStatusCode();
         return response;
     }
 
-    public ResponseEntity<BookDTO> executeDelete(String url, String id) {
+    public ResponseEntity<BookDto> executeDelete(String url, String id) {
         String entityUrl = url + id;
-        ResponseEntity<BookDTO> response = restTemplate.exchange(entityUrl, HttpMethod.DELETE, null, BookDTO.class);
+        ResponseEntity<BookDto> response = restTemplate.exchange(entityUrl, HttpMethod.DELETE, null, BookDto.class);
         lastStatusCode = response.getStatusCode();
         return response;
     }

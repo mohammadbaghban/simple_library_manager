@@ -1,4 +1,4 @@
-package co.mahsan.library_manager.Exceptions;
+package co.mahsan.library_manager.exception;
 
 public class WriterNotFoundException extends RuntimeException{
     public WriterNotFoundException(String id) {

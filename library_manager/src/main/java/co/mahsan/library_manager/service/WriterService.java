@@ -1,9 +1,9 @@
 package co.mahsan.library_manager.service;
 
-import co.mahsan.library_manager.Exceptions.WriterNotFoundException;
-import co.mahsan.library_manager.mappers.WriterMapper;
-import co.mahsan.library_manager.model.*;
+import co.mahsan.library_manager.exception.WriterNotFoundException;
+import co.mahsan.library_manager.mapper.WriterMapper;
 import co.mahsan.library_manager.model.Writer;
+import co.mahsan.library_manager.model.WriterDTO;
 import co.mahsan.library_manager.repository.WriterRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class WriterService {
     public List<WriterDTO> findAll() {
         List<Writer> writers = writerRepo.findAll();
         List<WriterDTO> writerDTOS = new ArrayList<>();
-        for (Writer writer:
+        for (Writer writer :
                 writers) {
             writerDTOS.add(WriterMapper.INSTANCE.writerToWriterDTO(writer));
         }
@@ -29,13 +29,8 @@ public class WriterService {
 
     public WriterDTO save(WriterDTO newWriterDTO) {
         Writer newWriter = WriterMapper.INSTANCE.writerDTOToWriter(newWriterDTO);
-        if(newWriter != null){
-            if (!writerRepo.findByName(newWriter.getName()).isPresent()){
-                newWriter = writerRepo.save(newWriter);
-            } else {
-                newWriter.setId(writerRepo.findByName(newWriter.getName()).get().getId());
-            }
-        }
+        newWriter = writerRepo.save(newWriter);
+
         return WriterMapper.INSTANCE.writerToWriterDTO(newWriter);
     }
 

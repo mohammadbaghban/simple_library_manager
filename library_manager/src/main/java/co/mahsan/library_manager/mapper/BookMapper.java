@@ -1,7 +1,7 @@
-package co.mahsan.library_manager.mappers; // todo comment: behtare esme package mofrad bashe
+package co.mahsan.library_manager.mapper;
 
 import co.mahsan.library_manager.model.Book;
-import co.mahsan.library_manager.model.BookDTO;
+import co.mahsan.library_manager.model.BookDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -9,7 +9,7 @@ import org.mapstruct.factory.Mappers;
 public interface BookMapper {
     BookMapper INSTANCE = Mappers.getMapper(BookMapper.class);
 
-    BookDTO bookToBookDTO(Book book);
-    Book bookDTOToBook(BookDTO bookDTO);
+    BookDto bookToBookDTO(Book book);
+    Book bookDTOToBook(BookDto bookDTO);
 
 }

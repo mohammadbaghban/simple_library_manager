@@ -1,4 +1,4 @@
-package co.mahsan.library_manager.mappers;
+package co.mahsan.library_manager.mapper;
 
 import co.mahsan.library_manager.model.Writer;
 import co.mahsan.library_manager.model.WriterDTO;

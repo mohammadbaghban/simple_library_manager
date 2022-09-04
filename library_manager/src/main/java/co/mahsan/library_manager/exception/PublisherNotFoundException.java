@@ -1,4 +1,4 @@
-package co.mahsan.library_manager.Exceptions;
+package co.mahsan.library_manager.exception;
 
 public class PublisherNotFoundException extends RuntimeException{
     public PublisherNotFoundException(String id) {

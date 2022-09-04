@@ -1,4 +1,4 @@
-package co.mahsan.library_manager.Exceptions; // todo comment: package naming. bia ba ham sohbat konim
+package co.mahsan.library_manager.exception;
 
 public class BookNotFoundException extends RuntimeException{
     public BookNotFoundException(String id) {

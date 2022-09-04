@@ -1,7 +1,7 @@
 package co.mahsan.library_manager.service;
 
-import co.mahsan.library_manager.Exceptions.PublisherNotFoundException;
-import co.mahsan.library_manager.mappers.PublisherMapper;
+import co.mahsan.library_manager.exception.PublisherNotFoundException;
+import co.mahsan.library_manager.mapper.PublisherMapper;
 import co.mahsan.library_manager.model.Publisher;
 import co.mahsan.library_manager.model.PublisherDTO;
 import co.mahsan.library_manager.repository.PublisherRepository;
@@ -27,15 +27,12 @@ public class PublisherService {
         return publisherDTOS;
     }
 
-    public PublisherDTO save(PublisherDTO newPublisherDTO) {
-        Publisher newPublisher = PublisherMapper.INSTANCE.publisherDTOToPublisher(newPublisherDTO);
-        if(newPublisher != null){ // todo comment: age null bashe chi? fekr kardi behesh?\
-            if (!publisherRepo.findByName(newPublisher.getName()).isPresent()){
-                newPublisher = publisherRepo.save(newPublisher);
-            } else {
-                newPublisher.setId(publisherRepo.findByName(newPublisher.getName()).get().getId()); // todo comment: alan dari ino 2 bar findByName mikoni
-            }
+    public PublisherDTO save(PublisherDTO publisherDTO) {
+        Publisher newPublisher = PublisherMapper.INSTANCE.publisherDTOToPublisher(publisherDTO);
+        if(newPublisher == null){
+            throw new PublisherNotFoundException(publisherDTO.getId());
         }
+        newPublisher = publisherRepo.save(newPublisher);
         return PublisherMapper.INSTANCE.publisherToPublisherDTO(newPublisher);
     }
 
