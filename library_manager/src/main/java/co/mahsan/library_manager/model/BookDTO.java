@@ -10,14 +10,14 @@ import java.util.List;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class BookDTO {
+public class BookDTO { // todo comment: bad naming. BookDto dorost tare. bia baham sohbat konim.
     @Id
-    private String id;
+    private String id; // todo comment: baraye id-e DTO, lazeme @Id bezarim?
     private String name;
     private String publisherId;
     private List<String> writersId;
 
-    public BookDTO(){
+    public BookDTO(){ // todo comment: @NoArgsConstructor
 
     }
 

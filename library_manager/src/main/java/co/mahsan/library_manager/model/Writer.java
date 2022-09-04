@@ -16,7 +16,7 @@ public class Writer {
     private String id;
     private String name;
 
-    public Writer(){}
+    public Writer(){} // todo comment: @NoArgsConstructor
 
     @Override
     public String toString(){

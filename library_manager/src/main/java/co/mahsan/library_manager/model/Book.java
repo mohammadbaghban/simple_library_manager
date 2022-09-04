@@ -8,16 +8,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document(collection = "book")
+@Document(collection = "book") // todo comment: behtare String haye sabet mesle in, to ye static class neveshte beshan
 @Getter
 @Setter
 @Accessors(chain = true)
-public class Book {
+public class Book { // todo comment: be @EqualsAndHashCode niazi nadari?
     @Id
     private String id;
     private String name;
     private String publisherId;
-    private List<String> writersId;
+    private List<String> writersId; // todo comment: writresIds dorost tar nist? search kon
 
     public Book(String name, String publisherId, List<String> writersId) {
         this.name = name;
@@ -27,7 +27,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return String.format(
+        return String.format( // todo comment: niazi be new line bood?
                 "Book[id:%s, Name:'%s', Writers:'%s', Publisher:'%s']",
                 id, name, writersId, publisherId);
     }

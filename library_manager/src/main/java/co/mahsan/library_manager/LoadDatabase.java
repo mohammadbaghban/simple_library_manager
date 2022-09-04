@@ -13,10 +13,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
+// todo comment: reformat
 
 @Configuration
-class LoadDatabase implements CommandLineRunner {
-
+class LoadDatabase implements CommandLineRunner { // todo comment: Public class?
+    // todo comment: eseme classet khoob nist. bia sohbat konim.
     private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
     private final BookRepository bookRepo;
     private final PublisherRepository publisherRepo;
@@ -27,10 +28,10 @@ class LoadDatabase implements CommandLineRunner {
         this.writerRepo = writerRepo;
     }
 
-
+    // todo comment: new line?
     @Override
     public void run(String... args) throws Exception {
-
+        // todo comment: new line?
 
     }
 }

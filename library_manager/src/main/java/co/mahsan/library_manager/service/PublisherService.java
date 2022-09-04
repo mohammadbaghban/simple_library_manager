@@ -29,11 +29,11 @@ public class PublisherService {
 
     public PublisherDTO save(PublisherDTO newPublisherDTO) {
         Publisher newPublisher = PublisherMapper.INSTANCE.publisherDTOToPublisher(newPublisherDTO);
-        if(newPublisher != null){
+        if(newPublisher != null){ // todo comment: age null bashe chi? fekr kardi behesh?
             if (!publisherRepo.findByName(newPublisher.getName()).isPresent()){
                 newPublisher = publisherRepo.save(newPublisher);
             } else {
-                newPublisher.setId(publisherRepo.findByName(newPublisher.getName()).get().getId());
+                newPublisher.setId(publisherRepo.findByName(newPublisher.getName()).get().getId()); // todo comment: alan dari ino 2 bar findByName mikoni
             }
         }
         return PublisherMapper.INSTANCE.publisherToPublisherDTO(newPublisher);

@@ -18,6 +18,6 @@ public class Publisher {
 
     @Override
     public String toString(){
-        return "Name: " + name + " ";
+        return "Name: " + name + " "; // todo comment: chera id ro inja nazashti? (to class-e Book gazashte boodi)
     }
 }

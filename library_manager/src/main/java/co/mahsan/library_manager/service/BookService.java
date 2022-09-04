@@ -15,26 +15,26 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class BookService {
+public class BookService { // todo comment: Inversion of Control & Dependency Management
 
     private final BookRepository bookRepo;
     private final PublisherRepository publisherRepo;
 
     public List<BookDTO> findAll() {
         List<Book> books = bookRepo.findAll();
-        List<BookDTO> bookDTOS = new ArrayList<>();
-        for (Book book:
+        List<BookDTO> bookDTOS = new ArrayList<>(); // todo comment: bad naming
+        for (Book book: // todo comment: chera new line?
              books) {
             bookDTOS.add(BookMapper.INSTANCE.bookToBookDTO(book));
-        }
+        } // todo comment: forEach inja behtar nist?
         return bookDTOS;
     }
 
-    public BookDTO save(BookDTO newBookDTO) {
-
+    public BookDTO save(BookDTO newBookDTO) { // todo comment: niazi nist takid koni new hastesh
+        // todo comment: inconsistent style
         Book newBook = BookMapper.INSTANCE.bookDTOToBook(newBookDTO);
         if(newBook.getPublisherId() != null){
-            if (!publisherRepo.findById(newBook.getPublisherId()).isPresent()){
+            if (!publisherRepo.findById(newBook.getPublisherId()).isPresent()){ // todo comment: or else throw
                 throw new PublisherNotFoundException(newBook.getPublisherId());
             }
         }
@@ -45,10 +45,10 @@ public class BookService {
     public BookDTO findById(String id) {
         return BookMapper.INSTANCE.bookToBookDTO(bookRepo.findById(id)
                 .orElseThrow(() -> new BookNotFoundException(id)))
-                ;
+                ; // todo comment: bad style
     }
 
-    public BookDTO replaceBook(BookDTO newBookDTO, String id) {
+    public BookDTO replaceBook(BookDTO newBookDTO, String id) { // todo comment: stylesh benazaram mitoone behtar bashe
         return BookMapper.INSTANCE.bookToBookDTO(bookRepo.findById(id)
                 .map(book -> {
                     book.setName(newBookDTO.getName());
