@@ -15,13 +15,14 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Arrays;
 // todo comment: reformat
 
-@Configuration
+@Configuration // todo comment: bere to package configuration
 class LoadDatabase implements CommandLineRunner { // todo comment: Public class?
     // todo comment: eseme classet khoob nist. bia sohbat konim.
     private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
     private final BookRepository bookRepo;
     private final PublisherRepository publisherRepo;
     private final WriterRepository writerRepo;
+
     public LoadDatabase(BookRepository bookRepo, PublisherRepository publisherRepo, WriterRepository writerRepo) {
         this.bookRepo = bookRepo;
         this.publisherRepo = publisherRepo;

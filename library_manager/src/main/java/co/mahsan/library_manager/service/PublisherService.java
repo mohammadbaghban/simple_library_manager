@@ -29,7 +29,7 @@ public class PublisherService {
 
     public PublisherDTO save(PublisherDTO newPublisherDTO) {
         Publisher newPublisher = PublisherMapper.INSTANCE.publisherDTOToPublisher(newPublisherDTO);
-        if(newPublisher != null){ // todo comment: age null bashe chi? fekr kardi behesh?
+        if(newPublisher != null){ // todo comment: age null bashe chi? fekr kardi behesh?\
             if (!publisherRepo.findByName(newPublisher.getName()).isPresent()){
                 newPublisher = publisherRepo.save(newPublisher);
             } else {

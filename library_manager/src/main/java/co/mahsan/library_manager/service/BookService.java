@@ -12,10 +12,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class BookService { // todo comment: Inversion of Control & Dependency Management
+public class BookService {
 
     private final BookRepository bookRepo;
     private final PublisherRepository publisherRepo;
@@ -26,7 +27,7 @@ public class BookService { // todo comment: Inversion of Control & Dependency Ma
         for (Book book: // todo comment: chera new line?
              books) {
             bookDTOS.add(BookMapper.INSTANCE.bookToBookDTO(book));
-        } // todo comment: forEach inja behtar nist?
+        } // todo comment: map inja behtar nist?
         return bookDTOS;
     }
 
@@ -48,7 +49,7 @@ public class BookService { // todo comment: Inversion of Control & Dependency Ma
                 ; // todo comment: bad style
     }
 
-    public BookDTO replaceBook(BookDTO newBookDTO, String id) { // todo comment: stylesh benazaram mitoone behtar bashe
+    public BookDTO replaceBook(BookDTO newBookDTO, String id) {
         return BookMapper.INSTANCE.bookToBookDTO(bookRepo.findById(id)
                 .map(book -> {
                     book.setName(newBookDTO.getName());

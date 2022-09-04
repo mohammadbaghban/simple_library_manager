@@ -11,7 +11,7 @@ import java.util.List;
 @Document(collection = "book") // todo comment: behtare String haye sabet mesle in, to ye static class neveshte beshan
 @Getter
 @Setter
-@Accessors(chain = true)
+@Accessors(chain = true) // todo comment: @ToString
 public class Book { // todo comment: be @EqualsAndHashCode niazi nadari?
     @Id
     private String id;

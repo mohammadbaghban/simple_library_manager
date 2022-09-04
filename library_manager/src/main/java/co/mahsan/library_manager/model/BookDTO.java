@@ -11,17 +11,17 @@ import java.util.List;
 @Setter
 @Accessors(chain = true)
 public class BookDTO { // todo comment: bad naming. BookDto dorost tare. bia baham sohbat konim.
-    @Id
+    @Id // todo comment: @JsonProperty (search kon)
     private String id; // todo comment: baraye id-e DTO, lazeme @Id bezarim?
     private String name;
     private String publisherId;
     private List<String> writersId;
 
-    public BookDTO(){ // todo comment: @NoArgsConstructor
+    public BookDTO(){ // todo comment: @NoArgsConstructor YA @Data
 
     }
 
-    public BookDTO(String name, String publisherId, List<String> writersId) {
+    public BookDTO(String name, String publisherId, List<String> writersId) { // todo comment: no usage
         this.name = name;
         this.publisherId = publisherId;
         this.writersId = writersId;

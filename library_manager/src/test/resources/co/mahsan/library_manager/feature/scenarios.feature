@@ -24,5 +24,6 @@ Feature: Books CRUD
     When the client requests to delete last book
     Then check the status code to be OK
 
+  # todo comment: test-e add and get new book
 
 
