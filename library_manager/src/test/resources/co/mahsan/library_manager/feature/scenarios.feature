@@ -1,4 +1,4 @@
-Feature: Books can be retrieved
+Feature: Books CRUD
   Scenario: client makes call to GET /books
     When the client calls books
     Then check the status code to be OK
