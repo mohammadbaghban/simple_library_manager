@@ -6,6 +6,8 @@ import co.mahsan.library_manager.mappers.BookMapper;
 import co.mahsan.library_manager.model.Book;
 import co.mahsan.library_manager.model.BookDTO;
 import co.mahsan.library_manager.repository.BookRepository;
+import co.mahsan.library_manager.repository.PublisherRepository;
+import co.mahsan.library_manager.repository.WriterRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
-
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -35,21 +36,27 @@ public class Steps {
 
     private final BookController bookController;
     private final BookRepository bookRepository;
+    private final PublisherRepository publisherRepository;
+    private final WriterRepository writerRepository;
+    private final RestTemplate restTemplate = new RestTemplate();
+    //private final RestTemplate restTemplate;
     private String lastBookName = "";
     private String lastBookId = "";
     private HttpStatus lastStatusCode;
     private final String baseUrl = "http://localhost:8080";
+
     //this method executes after every scenario
     @After
     public void cleanUp() {
-        log.info(">>> cleaning up after scenario!");
+        bookRepository.deleteAll();
+        publisherRepository.deleteAll();
+        writerRepository.deleteAll();
     }
 
     //this method executes after every step
     @AfterStep
     public void afterStep() {
-        log.info(">>> AfterStep!");
-        //placeholder for after step logic
+
     }
 
     //this method executes before every scenario
@@ -136,7 +143,6 @@ public class Steps {
     }
 
     public ResponseEntity<String> executeGet(String url) {
-        RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response =  restTemplate.getForEntity(url, String.class);
         lastStatusCode = response.getStatusCode();
         return response;
@@ -144,7 +150,6 @@ public class Steps {
 
     public ResponseEntity<String> executePost(String url, String requestJson) throws IOException {
 
-        RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -155,7 +160,6 @@ public class Steps {
     }
 
     public ResponseEntity<BookDTO> executePut(String url, String requestJson) throws IOException {
-        RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -167,11 +171,8 @@ public class Steps {
 
     public ResponseEntity<BookDTO> executeDelete(String url, String id) {
         String entityUrl = url + id;
-        RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<BookDTO> response = restTemplate.exchange(entityUrl, HttpMethod.DELETE, null, BookDTO.class);
         lastStatusCode = response.getStatusCode();
         return response;
     }
-
-
 }

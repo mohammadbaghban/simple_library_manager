@@ -1,5 +1,6 @@
 Feature: Books CRUD
   Scenario: client makes call to GET /books
+    Given execute posting a new book
     When the client calls books
     Then check the status code to be OK
 
