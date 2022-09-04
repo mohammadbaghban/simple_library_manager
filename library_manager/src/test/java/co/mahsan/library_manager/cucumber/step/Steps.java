@@ -1,6 +1,9 @@
 package co.mahsan.library_manager.cucumber.step;
 
+import co.mahsan.library_manager.Exceptions.BookNotFoundException;
 import co.mahsan.library_manager.controller.BookController;
+import co.mahsan.library_manager.mappers.BookMapper;
+import co.mahsan.library_manager.model.Book;
 import co.mahsan.library_manager.model.BookDTO;
 import co.mahsan.library_manager.repository.BookRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -22,6 +25,7 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -108,6 +112,29 @@ public class Steps {
         assertFalse(bookRepository.findByName(lastBookName).isEmpty());
     }
 
+    @When("the client requests to update last book name")
+    public void theClientRequestsToUpdateLastBook() throws BookNotFoundException, IOException {
+        Optional<Book> optionalBook = bookRepository.findById(lastBookId);
+        BookDTO bookDTO;
+        if (!optionalBook.isPresent()) {
+            throw new BookNotFoundException("Book with this id not found");
+        } else {
+            bookDTO = BookMapper.INSTANCE.bookToBookDTO(optionalBook.get());
+        }
+        lastBookName = new Date().toString();
+        bookDTO.setName(lastBookName);
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonInString = mapper.writeValueAsString(bookDTO);
+        HttpEntity<BookDTO> response = executePut(baseUrl + "/books/" + lastBookId, jsonInString);
+        assertEquals(response.getBody().getName(), lastBookName);
+    }
+
+    @When("the client requests to delete last book")
+    public void deleteLastBook() {
+        ResponseEntity<BookDTO> response = executeDelete(baseUrl + "/books/", lastBookId);
+        assertFalse(bookRepository.findById(lastBookId).isPresent());
+    }
+
     public ResponseEntity<String> executeGet(String url) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response =  restTemplate.getForEntity(url, String.class);
@@ -126,4 +153,25 @@ public class Steps {
         lastStatusCode = response.getStatusCode();
         return response;
     }
+
+    public ResponseEntity<BookDTO> executePut(String url, String requestJson) throws IOException {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> entity = new HttpEntity<String>(requestJson, headers);
+        ResponseEntity<BookDTO> response = restTemplate.exchange(url, HttpMethod.PUT, entity, BookDTO.class);
+        lastStatusCode = response.getStatusCode();
+        return response;
+    }
+
+    public ResponseEntity<BookDTO> executeDelete(String url, String id) {
+        String entityUrl = url + id;
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<BookDTO> response = restTemplate.exchange(entityUrl, HttpMethod.DELETE, null, BookDTO.class);
+        lastStatusCode = response.getStatusCode();
+        return response;
+    }
+
+
 }

@@ -13,4 +13,15 @@ Feature: Books can be retrieved
     Then check if new book is in database
     And check the status code to be OK
 
+  Scenario: client makes update request
+    Given execute posting a new book
+    When the client requests to update last book name
+    Then check the status code to be OK
+
+  Scenario: client makes delete request
+    Given execute posting a new book
+    When the client requests to delete last book
+    Then check the status code to be OK
+
+
 
