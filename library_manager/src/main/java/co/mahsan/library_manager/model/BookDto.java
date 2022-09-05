@@ -1,4 +1,4 @@
-package co.mahsan.library_manager.model;
+package co.mahsan.library_manager.model;//todo comment: class haye DTO bayad to package controller bashand. bia ba ham sohbat konim
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,5 +14,5 @@ public class BookDto {
     private String name;
     private String publisherId;
     private List<String> writersId;
-
+    //todo comment: inja behtare new line nabashe :D
 }

@@ -12,5 +12,5 @@ public class DatabaseLoader {
     private final BookRepository bookRepo;
     private final PublisherRepository publisherRepo;
     private final WriterRepository writerRepo;
-
+    // todo comment: inja new line nabashe behtare :D
 }

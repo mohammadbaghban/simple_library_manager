@@ -52,20 +52,20 @@ public class Steps {
 
     //this method executes after every step
     @AfterStep
-    public void afterStep() {
+    public void afterStep() {//todo comment: in ezafi nist?
 
     }
 
     //this method executes before every scenario
     @Before
-    public void before() {
+    public void before() {//todo comment: ba Background bayad handle koni
         log.info(">>> Before scenario!");
         lastBookName = new Date().toString();
     }
 
     //this method executes before every step
     @BeforeStep
-    public void beforeStep() {
+    public void beforeStep() {//todo comment: in ezafi nist?
         log.info(">>> BeforeStep!");
         //placeholder for before step logic
     }
@@ -108,7 +108,7 @@ public class Steps {
         List<BookDto> booksDTO = objectMapper.readValue(response.getBody(), new TypeReference<List<BookDto>>(){});
         System.out.println("books received " + booksDTO.get(0));
         //assertEquals(bookDTO.getName(), "new book");
-
+        //todo comment: chera khat-e bala commente?
     }
 
     @Then("check if new book is in database")
@@ -130,12 +130,12 @@ public class Steps {
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString = mapper.writeValueAsString(bookDTO);
         HttpEntity<BookDto> response = executePut(baseUrl + "/books/" + lastBookId, jsonInString);
-        assertEquals(response.getBody().getName(), lastBookName);
+        assertEquals(response.getBody().getName(), lastBookName); //todo comment: warning ro dorost kon
     }
 
     @When("the client requests to delete last book")
     public void deleteLastBook() {
-        ResponseEntity<BookDto> response = executeDelete(baseUrl + "/books/", lastBookId);
+        ResponseEntity<BookDto> response = executeDelete(baseUrl + "/books/", lastBookId); //todo comment: unused variable
         assertFalse(bookRepository.findById(lastBookId).isPresent());
     }
 
@@ -145,7 +145,7 @@ public class Steps {
         return response;
     }
 
-    public ResponseEntity<String> executePost(String url, String requestJson) throws IOException {
+    public ResponseEntity<String> executePost(String url, String requestJson) throws IOException {//todo comment: exception nemide ke
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -156,7 +156,7 @@ public class Steps {
         return response;
     }
 
-    public ResponseEntity<BookDto> executePut(String url, String requestJson) throws IOException {
+    public ResponseEntity<BookDto> executePut(String url, String requestJson) throws IOException {//todo comment: 1.private 2.exception nemide ke
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -166,7 +166,7 @@ public class Steps {
         return response;
     }
 
-    public ResponseEntity<BookDto> executeDelete(String url, String id) {
+    public ResponseEntity<BookDto> executeDelete(String url, String id) {//todo comment: private
         String entityUrl = url + id;
         ResponseEntity<BookDto> response = restTemplate.exchange(entityUrl, HttpMethod.DELETE, null, BookDto.class);
         lastStatusCode = response.getStatusCode();

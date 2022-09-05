@@ -22,7 +22,7 @@ public class BookService {
     }
 
     public BookDto save(BookDto bookDto) {
-        Book newBook = BookMapper.INSTANCE.bookDTOToBook(bookDto);
+        Book newBook = BookMapper.INSTANCE.bookDTOToBook(bookDto);//todo comment: chera Instance? chera inject nemikoni to in class?
         return BookMapper.INSTANCE.bookToBookDTO(bookRepo.save(newBook));
     }
 

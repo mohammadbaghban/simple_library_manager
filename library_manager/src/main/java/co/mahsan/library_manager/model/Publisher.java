@@ -19,7 +19,7 @@ public class Publisher {
     private String name;
 
     @Override
-    public String toString(){
+    public String toString(){ //todo comment: mage gharar nashod @Data bezani?
         return "Name: " + name + " ";
     }
 }

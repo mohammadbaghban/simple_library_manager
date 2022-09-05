@@ -17,7 +17,7 @@ public class WriterService {
 
     private final WriterRepository writerRepo;
 
-    public List<WriterDTO> findAll() {
+    public List<WriterDTO> findAll() {//todo comment: stream
         List<Writer> writers = writerRepo.findAll();
         List<WriterDTO> writerDTOS = new ArrayList<>();
         for (Writer writer :
@@ -30,7 +30,7 @@ public class WriterService {
     public WriterDTO save(WriterDTO newWriterDTO) {
         Writer newWriter = WriterMapper.INSTANCE.writerDTOToWriter(newWriterDTO);
         newWriter = writerRepo.save(newWriter);
-
+        //todo comment: code bala khoob nist. in behtar nist? -> Writer newWriter =  writerRepo.save(WriterMapper.INSTANCE.writerDTOToWriter(newWriterDTO));
         return WriterMapper.INSTANCE.writerToWriterDTO(newWriter);
     }
 
@@ -39,7 +39,7 @@ public class WriterService {
                 .orElseThrow(() -> new WriterNotFoundException(id)));
     }
 
-    public WriterDTO replaceWriter(WriterDTO newWriterDTO, String id) {
+    public WriterDTO replaceWriter(WriterDTO newWriterDTO, String id) {//todo comment: Dto
         return WriterMapper.INSTANCE.writerToWriterDTO(writerRepo.findById(id)
                 .map(writer -> {
                     writer.setName(newWriterDTO.getName());

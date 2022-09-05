@@ -17,7 +17,7 @@ public class PublisherService {
     private final PublisherRepository publisherRepo;
 
 
-    public List<PublisherDTO> findAll() {
+    public List<PublisherDTO> findAll() {//todo comment: stream
         List<Publisher> publishers = publisherRepo.findAll();
         List<PublisherDTO> publisherDTOS = new ArrayList<>();
         for (Publisher publisher:
@@ -30,7 +30,7 @@ public class PublisherService {
     public PublisherDTO save(PublisherDTO publisherDTO) {
         Publisher newPublisher = PublisherMapper.INSTANCE.publisherDTOToPublisher(publisherDTO);
         if(newPublisher == null){
-            throw new PublisherNotFoundException(publisherDTO.getId());
+            throw new PublisherNotFoundException(publisherDTO.getId()); //todo comment: PublisherNotFound inja doroste?
         }
         newPublisher = publisherRepo.save(newPublisher);
         return PublisherMapper.INSTANCE.publisherToPublisherDTO(newPublisher);
@@ -41,7 +41,7 @@ public class PublisherService {
                 .orElseThrow(() -> new PublisherNotFoundException(id)));
     }
 
-    public PublisherDTO replacePublisher(PublisherDTO newPublisher, String id) {
+    public PublisherDTO replacePublisher(PublisherDTO newPublisher, String id) {//todo comment: esme newPublisher baraye dto khoob inst
         return PublisherMapper.INSTANCE.publisherToPublisherDTO(publisherRepo.findById(id)
                 .map(publisherDTO -> {
                     publisherDTO.setName(newPublisher.getName());

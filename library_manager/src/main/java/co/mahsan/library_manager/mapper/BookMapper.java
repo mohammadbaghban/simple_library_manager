@@ -9,7 +9,8 @@ import org.mapstruct.factory.Mappers;
 public interface BookMapper {
     BookMapper INSTANCE = Mappers.getMapper(BookMapper.class);
 
-    BookDto bookToBookDTO(Book book);
+    BookDto bookToBookDTO(Book book); //todo comment: beyne method ha bayad new line bashe
     Book bookDTOToBook(BookDto bookDTO);
-
+    //todo comment: inja behtare new line nabashe :D
 }
+//todo comment: style baghie mapper ha ro ham dorost kon

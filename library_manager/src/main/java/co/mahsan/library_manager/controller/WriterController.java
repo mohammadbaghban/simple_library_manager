@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class WriterController {
+public class WriterController { //todo comment: todo-comment haye BookController
     private final WriterService service;
 
     // Aggregate root
