@@ -1,14 +1,15 @@
 package co.mahsan.library_manager.mapper;
 
 import co.mahsan.library_manager.model.Publisher;
-import co.mahsan.library_manager.model.PublisherDTO;
+import co.mahsan.library_manager.model.PublisherDto;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+import static co.mahsan.library_manager.util.Constant.SPRING_COMPONENT_MODEL;
+
+@Mapper(componentModel = SPRING_COMPONENT_MODEL)
 public interface PublisherMapper {
-    PublisherMapper INSTANCE = Mappers.getMapper(PublisherMapper.class);
 
-    PublisherDTO publisherToPublisherDTO(Publisher publisher);
-    Publisher publisherDTOToPublisher(PublisherDTO publisherDTO);
+    PublisherDto publisherToPublisherDTO(Publisher publisher);
+
+    Publisher publisherDTOToPublisher(PublisherDto publisherDTO);
 }

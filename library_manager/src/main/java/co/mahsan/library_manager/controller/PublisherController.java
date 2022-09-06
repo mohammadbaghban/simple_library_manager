@@ -1,6 +1,6 @@
 package co.mahsan.library_manager.controller;
 
-import co.mahsan.library_manager.model.PublisherDTO;
+import co.mahsan.library_manager.model.PublisherDto;
 import co.mahsan.library_manager.service.PublisherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -9,37 +9,32 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class PublisherController {//todo comment: todo-comment haye BookController
+public class PublisherController {
     private final PublisherService service;
 
-    // Aggregate root
-    // tag::get-aggregate-root[]
     @GetMapping("/publishers")
-    List<PublisherDTO> all() {
+    List<PublisherDto> findAll() {
         return service.findAll();
     }
-    // end::get-aggregate-root[]
 
     @PostMapping("/publishers")
-    PublisherDTO newPublisher(@RequestBody PublisherDTO newPublisher) {
+    PublisherDto save(@RequestBody PublisherDto newPublisher) {
         return service.save(newPublisher);
     }
 
-    // Single item
-
     @GetMapping("/publishers/{id}")
-    PublisherDTO one(@PathVariable String id) {
+    PublisherDto find(@PathVariable String id) {
 
         return service.findById(id);
     }
 
     @PutMapping("/publishers/{id}")
-    PublisherDTO replacePublisher(@RequestBody PublisherDTO newPublisher, @PathVariable String id) {
-        return service.replacePublisher(newPublisher, id);
+    PublisherDto update(@RequestBody PublisherDto newPublisher, @PathVariable String id) {
+        return service.update(newPublisher, id);
     }
 
     @DeleteMapping("/publishers/{id}")
-    void deletePublisher(@PathVariable String id) {
-        service.deletePublisherById(id);
+    void delete(@PathVariable String id) {
+        service.delete(id);
     }
 }

@@ -1,57 +1,50 @@
 package co.mahsan.library_manager.service;
 
-import co.mahsan.library_manager.exception.WriterNotFoundException;
+import co.mahsan.library_manager.util.exception.WriterNotFoundException;
 import co.mahsan.library_manager.mapper.WriterMapper;
 import co.mahsan.library_manager.model.Writer;
-import co.mahsan.library_manager.model.WriterDTO;
+import co.mahsan.library_manager.model.WriterDto;
 import co.mahsan.library_manager.repository.WriterRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class WriterService {
 
     private final WriterRepository writerRepo;
+    private final WriterMapper writerMapper;
 
-    public List<WriterDTO> findAll() {//todo comment: stream
-        List<Writer> writers = writerRepo.findAll();
-        List<WriterDTO> writerDTOS = new ArrayList<>();
-        for (Writer writer :
-                writers) {
-            writerDTOS.add(WriterMapper.INSTANCE.writerToWriterDTO(writer));
-        }
-        return writerDTOS;
+    public List<WriterDto> findAll() {
+        return writerRepo.findAll().stream().map(writerMapper::writerToWriterDTO).collect(Collectors.toList());
     }
 
-    public WriterDTO save(WriterDTO newWriterDTO) {
-        Writer newWriter = WriterMapper.INSTANCE.writerDTOToWriter(newWriterDTO);
-        newWriter = writerRepo.save(newWriter);
-        //todo comment: code bala khoob nist. in behtar nist? -> Writer newWriter =  writerRepo.save(WriterMapper.INSTANCE.writerDTOToWriter(newWriterDTO));
-        return WriterMapper.INSTANCE.writerToWriterDTO(newWriter);
+    public WriterDto save(WriterDto newWriterDto) {
+        Writer newWriter =  writerRepo.save(writerMapper.writerDTOToWriter(newWriterDto));
+        return writerMapper.writerToWriterDTO(newWriter);
     }
 
-    public WriterDTO findById(String id) {
-        return WriterMapper.INSTANCE.writerToWriterDTO(writerRepo.findById(id)
+    public WriterDto findById(String id) {
+        return writerMapper.writerToWriterDTO(writerRepo.findById(id)
                 .orElseThrow(() -> new WriterNotFoundException(id)));
     }
 
-    public WriterDTO replaceWriter(WriterDTO newWriterDTO, String id) {//todo comment: Dto
-        return WriterMapper.INSTANCE.writerToWriterDTO(writerRepo.findById(id)
+    public WriterDto update(WriterDto newWriterDto, String id) {
+        return writerMapper.writerToWriterDTO(writerRepo.findById(id)
                 .map(writer -> {
-                    writer.setName(newWriterDTO.getName());
+                    writer.setName(newWriterDto.getName());
                     return writerRepo.save(writer);
                 })
                 .orElseGet(() -> {
-                    newWriterDTO.setId(id);
-                    return writerRepo.save(WriterMapper.INSTANCE.writerDTOToWriter(newWriterDTO));
+                    newWriterDto.setId(id);
+                    return writerRepo.save(writerMapper.writerDTOToWriter(newWriterDto));
                 }));
     }
 
-    public void deleteWriterById(String id) {
+    public void delete(String id) {
         writerRepo.deleteById(id);
     }
 }

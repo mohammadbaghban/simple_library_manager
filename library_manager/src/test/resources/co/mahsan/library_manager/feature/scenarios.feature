@@ -1,28 +1,26 @@
 Feature: Books CRUD
-  Scenario: client makes call to GET /books
-    Given execute posting a new book
-    When the client calls books
+  Scenario: client posts a book and gets all books
+    Given client posts a book with name "Animal Farm"
+    When the client gets all books
     Then check the status code to be OK
 
-  Scenario: client makes call to POST and GET book
-    Given execute posting a new book
+  Scenario: client makes call to POST and GET a book
+    Given client posts a book with name "Nineteen Eighty-Four"
     When the client calls book by id
-    Then check the status code to be OK
+    Then check the received book name has an id and its name is "Nineteen Eighty-Four"
+    And check the status code to be OK
 
   Scenario: client makes post request
-    When execute posting a new book
+    When client posts a book with name "Vojood"
     Then check if new book is in database
     And check the status code to be OK
 
   Scenario: client makes update request
-    Given execute posting a new book
+    Given client posts a book with name "Harry Potter and the Deathly Hallows"
     When the client requests to update last book name
-    Then check the status code to be OK
+    Then the book is updated
 
   Scenario: client makes delete request
-    Given execute posting a new book
+    Given client posts a book with name "Leili va Majnoon"
     When the client requests to delete last book
-    Then check the status code to be OK
-
-  #todo comment: matn-e scenario ha khoob nist. bia baham sohbat konim
-  #todo comment: step ha bayad tarjihan usable bashan ke alan nistan. bia baham sohbat konim
+    Then the book must not be in GET request

@@ -5,7 +5,7 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class PublisherDTO { //todo comment: PublisherDto
+public class PublisherDto {
 
     private String id;
     private String name;

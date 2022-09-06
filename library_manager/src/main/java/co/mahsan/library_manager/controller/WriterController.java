@@ -1,6 +1,6 @@
 package co.mahsan.library_manager.controller;
 
-import co.mahsan.library_manager.model.WriterDTO;
+import co.mahsan.library_manager.model.WriterDto;
 import co.mahsan.library_manager.service.WriterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -9,38 +9,34 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class WriterController { //todo comment: todo-comment haye BookController
+public class WriterController {
     private final WriterService service;
-
-    // Aggregate root
-    // tag::get-aggregate-root[]
     @GetMapping("/writers")
-    List<WriterDTO> all() {
+    List<WriterDto> findAll() {
         return service.findAll();
     }
-    // end::get-aggregate-root[]
 
     @PostMapping("/writers")
-    WriterDTO newWriter(@RequestBody WriterDTO newWriter) {
+    WriterDto save(@RequestBody WriterDto newWriter) {
         return service.save(newWriter);
     }
 
     // Single item
 
     @GetMapping("/writers/{id}")
-    WriterDTO one(@PathVariable String id) {
+    WriterDto find(@PathVariable String id) {
 
         return service.findById(id);
     }
 
     @PutMapping("/writers/{id}")
-    WriterDTO replaceWriter(@RequestBody WriterDTO newWriter, @PathVariable String id) {
-        return service.replaceWriter(newWriter, id);
+    WriterDto update(@RequestBody WriterDto writerDTO, @PathVariable String id) {
+        return service.update(writerDTO, id);
     }
 
     @DeleteMapping("/writers/{id}")
-    void deleteWriter(@PathVariable String id) {
-        service.deleteWriterById(id);
+    void delete(@PathVariable String id) {
+        service.delete(id);
     }
 }
 
